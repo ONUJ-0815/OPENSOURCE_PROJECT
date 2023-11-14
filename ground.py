@@ -1,10 +1,31 @@
 class BlockType:
     START = "출발점"
-    PROPERTY = "토지"
-    DESTINATION = "목적지"
     JAIL = "감옥"
     SOCIAL = "사회복지기금"
     SPACE = "우주여행"
+    GOLD_KEY = "황금열쇠"
+    PROPERTY = "토지"
+    tax = 0
+    def salary(self, user):
+        user.money += 200000 #200000원은 월급(임의의 수)
+    def inJail(self, user):
+        if(user.dice1 != user.dice2):
+            if(self.count != 3):
+                user.turns+=1
+                self.count+=1
+            elif(self.count == 3):
+                move(sum(user.dice1, user.dice2))
+        else:
+            move(sum(user.dice1, user.dice2))
+    def receive_Tax(self, user, Block):
+        user.money+=Block.price
+    def pay_Tax(self, user, Block):
+        Block.price += 150000 #150000원은 세금(임의의 수)
+        user.money -= 150000 
+    def space_Travel(self, user):
+        user.position = wantPosition #wantPosition은 UI에서 입력받아서 넣으면 됨
+
+
 
 class Block:
     def __init__(self, block_type, name, position, price=0, toll=0, villas=0, hotels=0):
@@ -63,15 +84,7 @@ class Board:
         for block in self.blocks:
             if block.position == position:
                 return block
-        return None
-
-# 플레이어 클래스
-class Player:
-    def __init__(self, name):
-        self.name = name
-        self.position = 0  
-        self.money = 100000 
-        self.properties = []  
+        return None 
 
 # 부루마블 보드 생성
 
