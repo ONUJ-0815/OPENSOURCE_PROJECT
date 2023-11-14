@@ -1,5 +1,7 @@
 import pygame
 
+pygame.font.init()
+
 WHITE = (255, 255, 255)
 SKYBLUE = (135, 206, 235)
 BLACK = (0, 0, 0)
@@ -103,32 +105,6 @@ User_Space4 = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT, HEIGHT/2, (WIDTH-HEIGHT)/2,
 font3 = pygame.font.SysFont(None, 40)
 
 i, j = 1, 1
-ground = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*11/13, HEIGHT*2/13, HEIGHT*2/13)
-pygame.draw.rect(screen, WHITE, ground, Ground_Line)
-while j < 10:
-    ground = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13 - j*HEIGHT/13, HEIGHT*11/13, HEIGHT/13, HEIGHT*2/13)
-    pygame.draw.rect(screen, WHITE, ground, Ground_Line)
-    j = j + 1
-ground = pygame.Rect((WIDTH-HEIGHT)/2, HEIGHT*11/13, HEIGHT*2/13, HEIGHT*2/13)
-pygame.draw.rect(screen, WHITE, ground, Ground_Line)
-j = j + 1
-while j < 20:
-    ground = pygame.Rect((WIDTH-HEIGHT)/2, HEIGHT*11/13 - (j - 10)*HEIGHT/13, HEIGHT*2/13, HEIGHT/13)
-    pygame.draw.rect(screen, WHITE, ground, Ground_Line)
-    j = j + 1
-ground = pygame.Rect((WIDTH-HEIGHT)/2, 0, HEIGHT*2/13, HEIGHT*2/13)
-pygame.draw.rect(screen, WHITE, ground, Ground_Line)
-j = j + 1
-while j < 30:
-        ground = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*2/13 + (j - 21)*HEIGHT/13, 0, HEIGHT/13, HEIGHT*2/13)
-        pygame.draw.rect(screen, WHITE, ground, Ground_Line)
-        j = j + 1
-ground = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, 0, HEIGHT*2/13, HEIGHT*2/13)
-pygame.draw.rect(screen, WHITE, ground, Ground_Line)
-j = j + 1
-while j < 40:
-    ground = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*2/13 + (j - 31)*HEIGHT/13, HEIGHT*2/13, HEIGHT/13)
-    pygame.draw.rect(screen, WHITE, ground, Ground_Line)
 
 class GAME_SCREEN(Base):
     def __init__(self):
