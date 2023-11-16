@@ -1,10 +1,12 @@
 import pygame
+import sys
 
 pygame.font.init()
 
 WHITE = (255, 255, 255)
 SKYBLUE = (135, 206, 235)
 BLACK = (0, 0, 0)
+YELLOW = (255, 255, 0)
 MID = (105, 186, 255)
 
 WIDTH = 1240
@@ -25,7 +27,7 @@ class Base:
     
     def handle_events(self, event):
         for event in pygame.event.get():
-            if(event,type == pygame.QUIT):
+            if(event.type == pygame.QUIT):
                 pygame.quit()
 
 
@@ -104,8 +106,6 @@ User_Space4 = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT, HEIGHT/2, (WIDTH-HEIGHT)/2,
 
 font3 = pygame.font.SysFont(None, 40)
 
-i, j = 1, 1
-
 class GAME_SCREEN(Base):
     def __init__(self):
         #생성자
@@ -143,7 +143,7 @@ class GAME_SCREEN(Base):
             screen.blit(User3, ((WIDTH-HEIGHT)/2 + HEIGHT, 0))
             User4 = font3.render("User 4", True, (0, 0, 0))
             screen.blit(User4, ((WIDTH-HEIGHT)/2 + HEIGHT, HEIGHT/2))
-        i, j = 1, 1
+        j = 1
         ground = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*11/13, HEIGHT*2/13, HEIGHT*2/13)
         pygame.draw.rect(screen, WHITE, ground, Ground_Line)
         while j < 10:
@@ -171,3 +171,50 @@ class GAME_SCREEN(Base):
             ground = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*2/13 + (j - 31)*HEIGHT/13, HEIGHT*2/13, HEIGHT/13)
             pygame.draw.rect(screen, WHITE, ground, Ground_Line)
             
+
+
+X_button = pygame.image.load("X_button.png")
+X_button = pygame.transform.scale(X_button, (WIDTH*1/16, HEIGHT*1/16))
+X_width, X_height = X_button.get_size()
+
+class Ground_Info(Base):
+    def __init__(self):
+        pass
+
+    def handle_events(self, events):
+        super().handle_events(events)
+
+    def draw(self):
+        Info = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*1/13, HEIGHT*2/13, HEIGHT*10/13, HEIGHT*9/13)
+        Tit = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*1/13, HEIGHT*2/13, HEIGHT*10/13, HEIGHT*1/13)
+        screen.blit(X_button, ())
+        pygame.draw.rect(screen, WHITE, Info)
+        pygame.draw.rect(screen, YELLOW, Tit)
+
+
+
+
+
+class PygameWindow:
+    def __init__(self):
+        pygame.init()
+        self.width = WIDTH
+        self.height = HEIGHT
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.clock = pygame.time.Clock()
+        self.current_screen = START_MENU(self.screen)
+
+    def run_game(self):
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+
+                self.current_screen = self.current_screen.handle_events(event)
+
+            self.current_screen.update()
+            self.current_screen.draw()
+
+            pygame.display.flip()
+            self.clock.tick(60)
