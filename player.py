@@ -4,13 +4,13 @@ import random
 BOARD_SIZE = 40
 
 class User:
-    def __init__(self, name = None, money = None):
+    def __init__(self, name = None):
         self.name = name
         self.position = 0
         self.items = [6]  # 가지고 있는 아이템을 저장할 리스트
         self.dice = 0  # 주사위 숫자를 저장할 변수
         self.dice_rolls = 0 #주사위 두 번까지 굴릴수있게 추적(아이템에도 활용가능)
-        self.money = 0
+        self.money = 3000000
         self.turns = 0
         self.SE = ''
 
@@ -107,7 +107,7 @@ class Item:
         print("{user.name}님이 \"{self.name}\"아이템 사용! 출발지로 이동합니다")
         moving = BOARD_SIZE = user.position
         User.move(user, moving)
-    
+
 class Burst:
     fine_money = 200000
     def __init__(self, name, number, rarity, percent):
@@ -136,3 +136,14 @@ class Burst:
         print("복권에 당첨되었습니다! {Item.lotto_money}원 획득!")
         user.money += self.lotto_money
     
+
+    class Users:
+        def __init__(self):
+            self.users = []
+
+        def add_user(self, user):
+            self.users.append(user)
+
+        def make_Userlist(self, players):
+            for i in range(1, players + 1):
+                self.add_user(User(f"{i}P"))
