@@ -1,5 +1,6 @@
 import pygame
 import sys
+from ground import *
 
 pygame.font.init()
 
@@ -18,12 +19,12 @@ Ground_Line = 3
 
 #시작화면
 people = 2
-start_button = pygame.image.load("start_button.png")
+start_button = pygame.image.load("Pictures/start_button.png")
 start_button = pygame.transform.scale(start_button, (WIDTH * 3 / 16, HEIGHT * 5 / 64))
 S_width, S_height = start_button.get_size()
 S_x, S_y = WIDTH / 2 - S_width / 2, HEIGHT * 13 / 16 - S_height / 2
 
-Start_Bg = pygame.image.load("Start_bg.jpg")
+Start_Bg = pygame.image.load("Pictures/Start_bg.jpg")
 Start_Bg = pygame.transform.scale(Start_Bg, (WIDTH, HEIGHT))
 
 font1 = pygame.font.SysFont(None, 180)
@@ -34,12 +35,12 @@ font2 = pygame.font.SysFont(None, 100)
 People = font2.render(str(people), True, (0, 0, 0))
 P_width, P_height = People.get_size()
 
-Up = pygame.image.load("arrow_up.png")
+Up = pygame.image.load("Pictures/arrow_up.png")
 Up = pygame.transform.scale(Up, (70, 70))
 U_width, U_height = Up.get_size()
 U_x, U_y = WIDTH / 2 - P_width + 100, HEIGHT * 43 / 64
 
-Down = pygame.image.load("arrow_down.png")
+Down = pygame.image.load("Pictures/arrow_down.png")
 Down = pygame.transform.scale(Down, (70, 70))
 D_width, D_height = Down.get_size()
 D_x, D_y = WIDTH / 2 - P_width - 110, HEIGHT * 43 / 64
@@ -147,36 +148,8 @@ class GAME_SCREEN:
             self.window.blit(User3, ((WIDTH - HEIGHT) / 2 + HEIGHT, 0))
             User4 = font3.render("User 4", True, (0, 0, 0))
             self.window.blit(User4, ((WIDTH - HEIGHT) / 2 + HEIGHT, HEIGHT / 2))
-        j = 1
-        ground = pygame.Rect((WIDTH - HEIGHT) / 2 + HEIGHT * 11 / 13, HEIGHT * 11 / 13, HEIGHT * 2 / 13, HEIGHT * 2 / 13)
-        pygame.draw.rect(self.window, WHITE, ground, Ground_Line)
-        while j < 10:
-            ground = pygame.Rect((WIDTH - HEIGHT) / 2 + HEIGHT * 11 / 13 - j * HEIGHT / 13, HEIGHT * 11 / 13, HEIGHT / 13, HEIGHT * 2 / 13)
-            pygame.draw.rect(self.window, WHITE, ground, Ground_Line)
-            j = j + 1
-        ground = pygame.Rect((WIDTH - HEIGHT) / 2, HEIGHT * 11 / 13, HEIGHT * 2 / 13, HEIGHT * 2 / 13)
-        pygame.draw.rect(self.window, WHITE, ground, Ground_Line)
-        j = j + 1
-        while j < 20:
-            ground = pygame.Rect((WIDTH - HEIGHT) / 2, HEIGHT * 11 / 13 - (j - 10) * HEIGHT / 13, HEIGHT * 2 / 13, HEIGHT / 13)
-            pygame.draw.rect(self.window, WHITE, ground, Ground_Line)
-            j = j + 1
-        ground = pygame.Rect((WIDTH - HEIGHT) / 2, 0, HEIGHT * 2 / 13, HEIGHT * 2 / 13)
-        pygame.draw.rect(self.window, WHITE, ground, Ground_Line)
-        j = j + 1
-        while j < 30:
-            ground = pygame.Rect((WIDTH - HEIGHT) / 2 + HEIGHT * 2 / 13 + (j - 21) * HEIGHT / 13, 0, HEIGHT / 13,
-                                 HEIGHT * 2 / 13)
-            pygame.draw.rect(self.window, WHITE, ground, Ground_Line)
-            j = j + 1
-        ground = pygame.Rect((WIDTH - HEIGHT) / 2 + HEIGHT * 11 / 13, 0, HEIGHT * 2 / 13, HEIGHT * 2 / 13)
-        pygame.draw.rect(self.window, WHITE, ground, Ground_Line)
-        j = j + 1
-        while j < 40:
-            ground = pygame.Rect((WIDTH - HEIGHT) / 2 + HEIGHT * 11 / 13, HEIGHT * 2 / 13 + (j - 31) * HEIGHT / 13, HEIGHT * 2 / 13, HEIGHT / 13)
-            pygame.draw.rect(self.window, WHITE, ground, Ground_Line)
-            j = j + 1
         
+
         pygame.display.flip()
 
     def update(self):
@@ -192,7 +165,7 @@ class GAME_SCREEN:
 #땅 정보
 Info_Window = pygame.Rect((WIDTH - HEIGHT)/2 + HEIGHT*3/26, HEIGHT*3/26, HEIGHT * 10 / 13, HEIGHT * 10 / 13)
 Info_Tit = pygame.Rect((WIDTH - HEIGHT)/2 + HEIGHT*3/26, HEIGHT*3/26, HEIGHT * 10/13, HEIGHT*1/26)
-X_button = pygame.image.load("X_button.png")
+X_button = pygame.image.load("Pictures/X_button.png")
 X_button = pygame.transform.scale(X_button, (HEIGHT*1/26, HEIGHT*1/26))
 
 class Ground_Info:
