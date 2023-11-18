@@ -42,28 +42,19 @@ class User:
         self.dice = pygame.math.Vector2(self.dice1, self.dice2)
         if (self.dice1 == self.dice2):
             double = True
+            return double
         elif (self.dice1 != self.dice2):
             double = False
-        return double
-    def receive_Tax(self, user, Block):
-        user.money+=Block.price
-        Block.price = 0
-    def pay_Tax(self, user, Block):
-        Block.price += 150000 #150000원은 세금(임의의 수)
-        user.money -= 150000 
+            return double
 
     def move(self, moving):
-        # 시작 위치 저장
-        Sposition = self.position
+        #현재위치저장
+        Clocate = self.locate
         # 입력된 숫자만큼 이동
         self.position += moving
         if self.position >= BOARD_SIZE:  # 보드의 크기에 따라 설정
             self.position -= BOARD_SIZE
-        # 이동 후 위치 저장
-        Eposition = self.position
-        # 출발지 지났으면, 월급 획득
-        if Eposition <= Sposition:
-            self.money += 200000
+        
     
     def locate(self):
         print(self.name + "님의 현재 위치:", self.position, "번째 칸")
@@ -132,7 +123,7 @@ class Item:
         print("{user.name}님이 \"{self.name}\"아이템 사용! 출발지로 이동합니다")
         moving = BOARD_SIZE = user.position
         User.move(user, moving)
-    
+
 class Burst:
     fine_money = 200000
     def __init__(self, name, number, rarity, percent):
@@ -161,3 +152,14 @@ class Burst:
         print("복권에 당첨되었습니다! {Item.lotto_money}원 획득!")
         user.money += self.lotto_money
     
+
+    class Users:
+        def __init__(self):
+            self.users = []
+
+        def add_user(self, user):
+            self.users.append(user)
+
+        def make_Userlist(self, players):
+            for i in range(1, players + 1):
+                self.add_user(User(f"{i}P"))
