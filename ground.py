@@ -1,7 +1,11 @@
+from player import *
+from bluemarble_UI import *
+
 class BlockType:
     START = "출발점"
     JAIL = "감옥"
-    SOCIAL = "사회복지기금"
+    RECEIVE_TAX = "사회복지기금(수령처)"
+    PAY_TAX = "사회복지기금(접수처)"
     SPACE = "우주여행"
     GOLD_KEY = "황금열쇠"
     PROPERTY = "토지"
@@ -84,50 +88,79 @@ class Board:
         for block in self.blocks:
             if block.position == position:
                 return block
-        return None 
+        return None
+    # 도시 블록 추가
+    def make_block():
+        board = Board()
+        board.add_block(Block(BlockType.START, "출발지", 0))
 
-# 부루마블 보드 생성
+        board.add_block(Block(BlockType.PROPERTY, "타이페이", 1, price=50000, toll=2000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.GOLD_KEY, "황금열쇠", 2, price=0, toll=0, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "베이징", 3, price=80000, toll=4000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "마닐라", 4, price=80000, toll=4000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "제주도", 5, price=200000, toll=300000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "싱가포르", 6, price=100000, toll=6000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.GOLD_KEY, "황금열쇠", 7, price=0, toll=0, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "카이로", 8, price=100000, toll=6000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "이스탄불", 9, price=120000, toll=8000, villas=0, hotels=0))
 
-# 도시 블록 추가
-def play():
-    board = Board()
-    board.add_block(Block(BlockType.START, "출발지", 0))
+        board.add_block(Block(BlockType.JAIL, "무인도", 10))
 
-    board.add_block(Block(BlockType.PROPERTY, "타이페이", 1, price=50000, toll=2000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "베이징", 2, price=80000, toll=4000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "마닐라", 3, price=80000, toll=4000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "제주도", 4, price=200000, toll=300000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "싱가포르", 5, price=100000, toll=6000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "카이로", 6, price=100000, toll=6000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "이스탄불", 7, price=120000, toll=8000, villas=0, hotels=0))
-
-    board.add_block(Block(BlockType.JAIL, "무인도", 8))
-
-    board.add_block(Block(BlockType.PROPERTY, "아테네", 9, price=140000, toll=10000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "코펜하겐", 10, price=160000, toll=12000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "스톡홀름", 11, price=160000, toll=12000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "콩코드 여객기", 12, price=200000, toll=300000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "취리히", 13, price=180000, toll=14000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "베를린", 14, price=160000, toll=12000, villas=0, hotels=0))
-    board.add_block(Block(BlockType.PROPERTY, "오타와", 15, price=200000, toll=16000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "아테네", 11, price=140000, toll=10000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.GOLD_KEY, "황금열쇠", 12, price=0, toll=0, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "코펜하겐", 13, price=160000, toll=12000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "스톡홀름", 14, price=160000, toll=12000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "콩코드 여객기", 15, price=200000, toll=300000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "취리히", 16, price=180000, toll=14000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.GOLD_KEY, "황금열쇠", 17, price=0, toll=0, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "베를린", 18, price=160000, toll=12000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "오타와", 19, price=200000, toll=16000, villas=0, hotels=0))
     
-    board.add_block(Block(BlockType.SOCIAL, "사회복지기금", 16))
+        board.add_block(Block(BlockType.RECEIVE_TAX, "사회복지기금(수령처)", 20))
 
-    board.add_block(Block(BlockType.PROPERTY, "부에노스 아이레스", 17, price=220000, toll=18000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "상파울루", 18, price=240000, toll=20000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "시드니", 19, price=240000, toll=20000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "부산", 20, price=500000, toll=600000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "하와이", 21, price=260000, toll=22000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "리스본", 22, price=260000, toll=22000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "퀸 엘리자베스호", 23, price=300000, toll=250000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "마드리드", 24, price=280000, toll=24000, buildings=0))
+        board.add_block(Block(BlockType.PROPERTY, "부에노스 아이레스", 21, price=220000, toll=18000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.GOLD_KEY, "황금열쇠", 22, price=0, toll=0, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "상파울루", 23, price=240000, toll=20000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "시드니", 24, price=240000, toll=20000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "부산", 25, price=500000, toll=600000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "하와이", 26, price=260000, toll=22000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "리스본", 27, price=260000, toll=22000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "퀸 엘리자베스호", 28, price=300000, toll=250000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "마드리드", 29, price=280000, toll=24000, villas=0, hotels=0))
     
-    board.add_block(Block(BlockType.SPACE, "우주여행", 25, price=200000, toll=200000, buildings=0))
+        board.add_block(Block(BlockType.SPACE, "우주여행", 30, price=200000, toll=200000, villas=0, hotels=0))
 
-    board.add_block(Block(BlockType.PROPERTY, "도쿄", 26, price=300000, toll=26000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "컬럼비아호", 27, price=450000, toll=300000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "파리", 28, price=320000, toll=28000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "로마", 29, price=320000, toll=28000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "런던", 30, price=350000, toll=35000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "뉴욕", 31, price=350000, toll=35000, buildings=0))
-    board.add_block(Block(BlockType.PROPERTY, "서울", 32, price=1000000, toll=2000000, buildings=0))
+        board.add_block(Block(BlockType.PROPERTY, "도쿄", 31, price=300000, toll=26000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "컬럼비아호", 32, price=450000, toll=300000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "파리", 33, price=320000, toll=28000,villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "로마", 34, price=320000, toll=28000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.GOLD_KEY, "황금열쇠", 35, price=0, toll=0, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "런던", 36, price=350000, toll=35000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "뉴욕", 37, price=350000, toll=35000, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PAY_TAX, "사회복지기금(접수처)", 38, price=0, toll=0, villas=0, hotels=0))
+        board.add_block(Block(BlockType.PROPERTY, "서울", 39, price=1000000, toll=2000000, villas=0, hotels=0))
+    def draw(self, surface):
+        if self.position == 0:
+            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*11/13, HEIGHT*2/13, HEIGHT*2/13)
+            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+        if 1 <= self.position <= 9:
+            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13 - self.position*HEIGHT/13, HEIGHT*11/13, HEIGHT/13, HEIGHT*2/13)
+            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+        if self.position == 10:
+            self.rect = pygame.Rect((WIDTH-HEIGHT)/2, HEIGHT*11/13, HEIGHT*2/13, HEIGHT*2/13)
+            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+        if 11 <= self.position <= 19:
+            self.rect = pygame.Rect((WIDTH-HEIGHT)/2, HEIGHT*11/13 - (self.position - 10)*HEIGHT/13, HEIGHT*2/13, HEIGHT/13)
+            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+        if self.position == 20:
+            self.rect = pygame.Rect((WIDTH-HEIGHT)/2, 0, HEIGHT*2/13, HEIGHT*2/13)
+            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+        if 21 <= self.position <= 29:
+            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*2/13 + (self.position - 21)*HEIGHT/13, 0, HEIGHT/13, HEIGHT*2/13)
+            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+        if self.position == 30:
+            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, 0, HEIGHT*2/13, HEIGHT*2/13)
+            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+        if 31 <= self.position <= 39:
+            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*2/13 + (self.position - 31)*HEIGHT/13, HEIGHT*2/13, HEIGHT/13)
+            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)

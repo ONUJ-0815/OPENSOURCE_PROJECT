@@ -20,12 +20,13 @@ class PygameWindow:
     def run_game(self):
         ground.Board.make_block()
         while True:
-            for event in pygame.event.get():
+            events = pygame.event.get()
+            for event in events:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 
-            self.current_screen = self.current_screen.handle_events(event)
+            self.current_screen = self.current_screen.handle_events(events)
             self.current_screen.update()
             self.current_screen.draw()
 
