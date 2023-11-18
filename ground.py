@@ -10,9 +10,8 @@ class BlockType:
     GOLD_KEY = "황금열쇠"
     PROPERTY = "토지"
     tax = 0
-    def salary(self, user):
-        user.money += 200000 #200000원은 월급(임의의 수)
     def inJail(self, user):
+        from player import move
         if(user.dice1 != user.dice2):
             if(self.count != 3):
                 user.turns+=1
@@ -21,11 +20,6 @@ class BlockType:
                 move(sum(user.dice1, user.dice2))
         else:
             move(sum(user.dice1, user.dice2))
-    def receive_Tax(self, user, Block):
-        user.money+=Block.price
-    def pay_Tax(self, user, Block):
-        Block.price += 150000 #150000원은 세금(임의의 수)
-        user.money -= 150000 
     def space_Travel(self, user):
         user.position = wantPosition #wantPosition은 UI에서 입력받아서 넣으면 됨
 
@@ -139,28 +133,30 @@ class Board:
         board.add_block(Block(BlockType.PROPERTY, "뉴욕", 37, price=350000, toll=35000, villas=0, hotels=0))
         board.add_block(Block(BlockType.PAY_TAX, "사회복지기금(접수처)", 38, price=0, toll=0, villas=0, hotels=0))
         board.add_block(Block(BlockType.PROPERTY, "서울", 39, price=1000000, toll=2000000, villas=0, hotels=0))
+        return board
     def draw(self, surface):
-        if self.position == 0:
-            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*11/13, HEIGHT*2/13, HEIGHT*2/13)
-            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
-        if 1 <= self.position <= 9:
-            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13 - self.position*HEIGHT/13, HEIGHT*11/13, HEIGHT/13, HEIGHT*2/13)
-            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
-        if self.position == 10:
-            self.rect = pygame.Rect((WIDTH-HEIGHT)/2, HEIGHT*11/13, HEIGHT*2/13, HEIGHT*2/13)
-            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
-        if 11 <= self.position <= 19:
-            self.rect = pygame.Rect((WIDTH-HEIGHT)/2, HEIGHT*11/13 - (self.position - 10)*HEIGHT/13, HEIGHT*2/13, HEIGHT/13)
-            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
-        if self.position == 20:
-            self.rect = pygame.Rect((WIDTH-HEIGHT)/2, 0, HEIGHT*2/13, HEIGHT*2/13)
-            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
-        if 21 <= self.position <= 29:
-            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*2/13 + (self.position - 21)*HEIGHT/13, 0, HEIGHT/13, HEIGHT*2/13)
-            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
-        if self.position == 30:
-            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, 0, HEIGHT*2/13, HEIGHT*2/13)
-            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
-        if 31 <= self.position <= 39:
-            self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*2/13 + (self.position - 31)*HEIGHT/13, HEIGHT*2/13, HEIGHT/13)
-            pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+        for block in self.blocks:
+            if block.position == 0:
+                self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*11/13, HEIGHT*2/13, HEIGHT*2/13)
+                pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+            if 1 <= block.position <= 9:
+                self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13 - block.position*HEIGHT/13, HEIGHT*11/13, HEIGHT/13, HEIGHT*2/13)
+                pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+            if block.position == 10:
+                self.rect = pygame.Rect((WIDTH-HEIGHT)/2, HEIGHT*11/13, HEIGHT*2/13, HEIGHT*2/13)
+                pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+            if 11 <= block.position <= 19:
+                self.rect = pygame.Rect((WIDTH-HEIGHT)/2, HEIGHT*11/13 - (block.position - 10)*HEIGHT/13, HEIGHT*2/13, HEIGHT/13)
+                pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+            if block.position == 20:
+                self.rect = pygame.Rect((WIDTH-HEIGHT)/2, 0, HEIGHT*2/13, HEIGHT*2/13)
+                pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+            if 21 <= block.position <= 29:
+                self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*2/13 + (block.position - 21)*HEIGHT/13, 0, HEIGHT/13, HEIGHT*2/13)
+                pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+            if block.position == 30:
+                self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, 0, HEIGHT*2/13, HEIGHT*2/13)
+                pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)
+            if 31 <= block.position <= 39:
+                self.rect = pygame.Rect((WIDTH-HEIGHT)/2 + HEIGHT*11/13, HEIGHT*2/13 + (block.position - 31)*HEIGHT/13, HEIGHT*2/13, HEIGHT/13)
+                pygame.draw.rect(surface, WHITE, self.rect, Ground_Line)

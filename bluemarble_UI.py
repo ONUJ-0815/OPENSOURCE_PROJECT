@@ -1,6 +1,4 @@
 import pygame
-import sys
-from ground import *
 
 pygame.font.init()
 
@@ -93,12 +91,17 @@ class START_MENU:
 mid = pygame.Rect((WIDTH - HEIGHT) / 2 + HEIGHT * 2 / 13, HEIGHT * 2 / 13, HEIGHT * 9 / 13, HEIGHT * 9 / 13)
 left = pygame.Rect(0, 0, (WIDTH - HEIGHT) / 2, HEIGHT)
 right = pygame.Rect((WIDTH - HEIGHT) / 2 + HEIGHT, 0, (WIDTH - HEIGHT) / 2, HEIGHT)
-Board = pygame.Rect((WIDTH - HEIGHT) / 2, 0, HEIGHT, HEIGHT)
+Map = pygame.Rect((WIDTH - HEIGHT) / 2, 0, HEIGHT, HEIGHT)
 
 User_Space1 = pygame.Rect(0, 0, (WIDTH - HEIGHT) / 2, HEIGHT / 2)
 User_Space2 = pygame.Rect(0, HEIGHT / 2, (WIDTH - HEIGHT) / 2, HEIGHT / 2)
 User_Space3 = pygame.Rect((WIDTH - HEIGHT) / 2 + HEIGHT, 0, (WIDTH - HEIGHT) / 2, HEIGHT / 2)
 User_Space4 = pygame.Rect((WIDTH - HEIGHT) / 2 + HEIGHT, HEIGHT / 2, (WIDTH - HEIGHT) / 2, HEIGHT / 2)
+
+Info_Window = pygame.Rect((WIDTH - HEIGHT)/2 + HEIGHT*3/26, HEIGHT*3/26, HEIGHT * 10 / 13, HEIGHT * 10 / 13)
+Info_Title = pygame.Rect((WIDTH - HEIGHT)/2 + HEIGHT*3/26, HEIGHT*3/26, HEIGHT * 10/13, HEIGHT*1/26)
+X_button = pygame.image.load("Pictures/X_button.png")
+X_button = pygame.transform.scale(X_button, (HEIGHT*1/26, HEIGHT*1/26))
 
 font3 = pygame.font.SysFont(None, 40)
 
@@ -111,15 +114,17 @@ class GAME_SCREEN:
         for event in events:
             if event.type == pygame.QUIT:
                 pygame.quit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if event.button == 1:
-                    pos = pygame.mouse.get_pos()
-
+            # if event.type == pygame.MOUSEBUTTONDOWN:
+            #     if event.button == 1:
+            #         x, y = event.pos
+            #         clicked = self.Ground_Click(x, y)
+            #         if Ground_Info:
+            #             return Ground_Info(clicked)
         return self
 
-    def draw(self):
+    def draw(self, board):
         people = self.people
-        pygame.draw.rect(self.window, SKYBLUE, Board)
+        pygame.draw.rect(self.window, SKYBLUE, Map)
         pygame.draw.rect(self.window, MID, mid)
         pygame.draw.rect(self.window, WHITE, left)
         pygame.draw.rect(self.window, WHITE, right)
@@ -127,19 +132,20 @@ class GAME_SCREEN:
         pygame.draw.rect(self.window, BLACK, User_Space2, 3)
         pygame.draw.rect(self.window, BLACK, User_Space3, 3)
         pygame.draw.rect(self.window, BLACK, User_Space4, 3)
+        board.draw(self.window)
         if people == 2:
             User1 = font3.render("User 1", True, (0, 0, 0))
             self.window.blit(User1, (0, 0))
             User4 = font3.render("User 2", True, (0, 0, 0))
             self.window.blit(User4, ((WIDTH - HEIGHT) / 2 + HEIGHT, HEIGHT / 2))
-        if people == 3:
+        elif people == 3:
             User1 = font3.render("User 1", True, (0, 0, 0))
             self.window.blit(User1, (0, 0))
             User2 = font3.render("User 2", True, (0, 0, 0))
             self.window.blit(User2, (0, HEIGHT / 2))
             User4 = font3.render("User 3", True, (0, 0, 0))
             self.window.blit(User4, ((WIDTH - HEIGHT) / 2 + HEIGHT, HEIGHT / 2))
-        if people == 4:
+        elif people == 4:
             User1 = font3.render("User 1", True, (0, 0, 0))
             self.window.blit(User1, (0, 0))
             User2 = font3.render("User 2", True, (0, 0, 0))
@@ -149,11 +155,17 @@ class GAME_SCREEN:
             User4 = font3.render("User 4", True, (0, 0, 0))
             self.window.blit(User4, ((WIDTH - HEIGHT) / 2 + HEIGHT, HEIGHT / 2))
         
-
         pygame.display.flip()
 
     def update(self):
         pass
+
+    # def Ground_Click(self, x, y):
+    #     for block in self.block.blocks:
+    #         if (block.properties.get("x") <= x <= block.properties.get("x") + 50 and block.properties.get("y") <= y <= block.properties.get("y") + 50):
+    #             return block.position
+    #     return None
+
 
 
 
@@ -169,9 +181,8 @@ X_button = pygame.image.load("Pictures/X_button.png")
 X_button = pygame.transform.scale(X_button, (HEIGHT*1/26, HEIGHT*1/26))
 
 class Ground_Info:
-    def __init__(self, window, position):
-        self.window = window
-        self.position = position
+    def __init__(self, Block):
+        pass
 
     def draw(self):
         pygame.draw.rect(self.window, WHITE, Info_Window)

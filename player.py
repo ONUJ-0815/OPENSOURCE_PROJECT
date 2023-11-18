@@ -4,16 +4,17 @@ import random
 BOARD_SIZE = 40
 
 class User:
-    def __init__(self, name = None, money = None):
+    def __init__(self, name = None):
         self.name = name
         self.position = 0
         self.items = [6]  # 가지고 있는 아이템을 저장할 리스트
         self.dice = 0  # 주사위 숫자를 저장할 변수
         self.dice_rolls = 0 #주사위 두 번까지 굴릴수있게 추적(아이템에도 활용가능)
-        self.money = 0
+        self.money = 3000000
         self.turns = 0
         self.SE = ''
-
+    def salary(self, user):
+        User.money +=200000 #200000원은 월급
     def roll_dice(self):
         # 이 부분에 턴 시작 + 턴 추가
         # 주사위를 굴린 후 나온 숫자를 self.dice에 저장
@@ -43,12 +44,26 @@ class User:
             double = True
         elif (self.dice1 != self.dice2):
             double = False
+        return double
+    def receive_Tax(self, user, Block):
+        user.money+=Block.price
+        Block.price = 0
+    def pay_Tax(self, user, Block):
+        Block.price += 150000 #150000원은 세금(임의의 수)
+        user.money -= 150000 
 
     def move(self, moving):
+        # 시작 위치 저장
+        Sposition = self.position
         # 입력된 숫자만큼 이동
         self.position += moving
         if self.position >= BOARD_SIZE:  # 보드의 크기에 따라 설정
             self.position -= BOARD_SIZE
+        # 이동 후 위치 저장
+        Eposition = self.position
+        # 출발지 지났으면, 월급 획득
+        if Eposition <= Sposition:
+            self.money += 200000
     
     def locate(self):
         print(self.name + "님의 현재 위치:", self.position, "번째 칸")
@@ -68,6 +83,16 @@ class User:
             print("보유중인 아이템이 없습니다!")
         else:
             print(self.name + "님이 보유중인 아이템:", *self.items)
+class Users:
+        def __init__(self):
+            self.users = []
+
+        def add_user(self, user):
+            self.users.append(user)
+
+        def make_Userlist(self, players):
+            for i in range(1, players+1):
+                self.add_user(User(f"{i}P"))
 
 class Item:
     lotto_money = 1000000
