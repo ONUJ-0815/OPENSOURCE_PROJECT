@@ -70,7 +70,7 @@ class User:
             print(self.name + "님이 보유중인 아이템:", *self.items)
 
 class Item:
-    lotto_rare = 100000
+    lotto_money = 1000000
     item_number = list(range(1,20))
     item_rarity = {"희귀", "영웅", "전설"}
     def __init__(self, name, number, rarity, percent):
@@ -87,18 +87,52 @@ class Item:
         return double
     
     def Item_Lotto(self, user):
-        print("복권에 당첨되었습니다!" , Item.lotto_rare , "원 획득!")
-        user.money += self.lotto_rare
+        print("복권에 당첨되었습니다! {Item.lotto_money}원 획득!")
+        user.money += self.lotto_money
 
     def Item_Froze(self, user, enemy):
-        print(user.name + "님이" + enemy.name + "님에게" + self.name + "아이템을 사용하였습니다!")
+        print("{user.name}님이{enemy.name}님에게 {self.name}아이템을 사용하였습니다!")
         enemy.SE = "얼음"
 
-    def Item_Steal(self, user, enemy, ground):
-        print(user.name + "님이" + enemy.name + "님의" + ground.name + "을(를) 빼앗았습니다!")
-        ground.owner = user
+    def Item_Steal(self, user, enemy, block):
+        print("{user.name}님이 {enemy.name}님의 \"{block.name}\"을(를) 빼앗았습니다!")
+        block.owner = user
     
     def Item_dice_Onemore(self, user):
-        print(user.name + "님이 주사위 한번 더 아이템 사용!")
+        print("{user.name}님이 \"{self.name}\"아이템 사용!")
         Item.Logic_dice(self)
         user.move(user, sum(user.dice))
+
+    def Item_3block(self, user):
+        print("{user.name}님이 \"{self.name}\"아이템 사용! 3칸 이동합니다")
+        User.move(user, 3)
+
+    def Item_ReStart(self, user):
+        print("{user.name}님이 \"{self.name}\"아이템 사용! 출발지로 이동합니다")
+        moving = BOARD_SIZE = user.position
+        User.move(user, moving)
+
+class Penalty:
+    fine_money = 200000
+    def __init__(self, name, number, rarity, percent):
+        self.name = name
+        self.number = number
+        self.rarity = rarity
+        self.percent = percent
+
+    def Penalty_Tax(self, user):
+        print("{user.name}님이 세금 납부!")
+        user.money -= self.fine_money
+    
+    def Penalty_LossBlock(self, user, block):
+        print("{user.name}님이 {block.name}의 소유권 상실!")
+        block.owner = None
+    
+    def Penalty_Drifting(self, user):
+        print("{user.name}님이 무인도에 표류되었어요!")
+        if user.position <= 10:
+            moving = 10 - user.position
+        elif user.position > 10:
+            moving = BOARD_SIZE - (user.position - 10)
+        User.move(user, moving)
+    
