@@ -41,14 +41,19 @@ class User:
         self.dice = pygame.math.Vector2(self.dice1, self.dice2)
         if (self.dice1 == self.dice2):
             double = True
+            return double
         elif (self.dice1 != self.dice2):
             double = False
+            return double
 
     def move(self, moving):
+        #현재위치저장
+        Clocate = self.locate
         # 입력된 숫자만큼 이동
         self.position += moving
         if self.position >= BOARD_SIZE:  # 보드의 크기에 따라 설정
             self.position -= BOARD_SIZE
+        
     
     def locate(self):
         print(self.name + "님의 현재 위치:", self.position, "번째 칸")
