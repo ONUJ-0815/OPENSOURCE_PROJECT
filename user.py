@@ -4,7 +4,7 @@ import random
 BOARD_SIZE = 40
 
 class User:
-    def __init__(self, name):
+    def __init__(self, name = None, money = None):
         self.name = name
         self.position = 0
         self.items = [6]  # 가지고 있는 아이템을 저장할 리스트
@@ -102,3 +102,5 @@ class Item:
         print(user.name + "님이 주사위 한번 더 아이템 사용!")
         Item.Logic_dice(self)
         user.move(user, sum(user.dice))
+
+    def Item_
