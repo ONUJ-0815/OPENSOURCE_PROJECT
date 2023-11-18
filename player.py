@@ -85,10 +85,6 @@ class Item:
         User.dice = pygame.math.Vector2(self.dice1, self.dice2)
         double = User.dice1 == User.dice2
         return double
-    
-    def Item_Lotto(self, user):
-        print("복권에 당첨되었습니다! {Item.lotto_money}원 획득!")
-        user.money += self.lotto_money
 
     def Item_Froze(self, user, enemy):
         print("{user.name}님이{enemy.name}님에게 {self.name}아이템을 사용하였습니다!")
@@ -111,8 +107,8 @@ class Item:
         print("{user.name}님이 \"{self.name}\"아이템 사용! 출발지로 이동합니다")
         moving = BOARD_SIZE = user.position
         User.move(user, moving)
-
-class Penalty:
+    
+class Burst:
     fine_money = 200000
     def __init__(self, name, number, rarity, percent):
         self.name = name
@@ -120,19 +116,23 @@ class Penalty:
         self.rarity = rarity
         self.percent = percent
 
-    def Penalty_Tax(self, user):
+    def Burst_Tax(self, user):
         print("{user.name}님이 세금 납부!")
         user.money -= self.fine_money
     
-    def Penalty_LossBlock(self, user, block):
+    def Burst_LossBlock(self, user, block):
         print("{user.name}님이 {block.name}의 소유권 상실!")
         block.owner = None
     
-    def Penalty_Drifting(self, user):
+    def Burst_Drifting(self, user):
         print("{user.name}님이 무인도에 표류되었어요!")
         if user.position <= 10:
             moving = 10 - user.position
         elif user.position > 10:
             moving = BOARD_SIZE - (user.position - 10)
         User.move(user, moving)
+
+    def Burst_Lotto(self, user):
+        print("복권에 당첨되었습니다! {Item.lotto_money}원 획득!")
+        user.money += self.lotto_money
     
