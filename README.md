@@ -1,6 +1,6 @@
 화면 종류 및 진행도 : 3가지
     START_MENU    완료
-    GAME_SCREEN   30% 진행
+    GAME_SCREEN   40% 진행
     ENDING        70% 진행
 
 남은 기능
