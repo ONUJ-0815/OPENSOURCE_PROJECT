@@ -35,25 +35,15 @@ class User:
             hotel_price=propertie.hotels*propertie.hotel_cost
             pro_price+=land_price+villa_price+hotel_price
         self.ppt=pro_price
-    
-    def roll_dice(self):
-        self.dice1 = random.randint(1, 6)
-        self.dice2 = random.randint(1, 6)
-        self.dice = pygame.math.Vector2(self.dice1, self.dice2)
-        print(self.name)
-        print(self.dice1 , self.dice2)
-        if (self.dice1 == self.dice2):
-            double = True
-            return double
-        elif (self.dice1 != self.dice2):
-            double = False
-            return double
 
     def move(self, moving):
         # 현재 위치 저장
         Slocate = self.position
         # 입력된 숫자만큼 이동
         self.position += moving
+        log_instance.add_message(" ")
+        log_instance.add_message(f"{moving}칸 이동!")
+        log_instance.add_message(f"({self.name})")
         if self.position >= BOARD_SIZE:  # 보드의 크기에 따라 설정
             self.position -= BOARD_SIZE
         # 나중 위치 저장
@@ -77,26 +67,13 @@ class User:
                     lossblock = self.properties[0]
                     Burst.Burst_LossBlock(self, lossblock)
                 else:
+                    log_instance.add_message(" ")
                     log_instance.add_message("보유한 땅이 없습니다.")
             elif WhatBurst == 3:
                 Burst.Burst_Drifting(self)
             elif WhatBurst == 4:
                 Burst.Burst_Lotto(self)
-    
-    def locate(self):
-        log_instance.add_message(self.name + "님의 현재 위치:", self.position, "번째 칸")
 
-    def use_item(self, item):
-        # 아이템 사용
-        if item in self.items:
-            self.items.remove(item)
-            # 아이템 사용에 따른 동작을 추가
-
-    def item_list(self):
-        if len(self.items) == 0:
-            log_instance.add_message("보유중인 아이템이 없습니다!")
-        else:
-            log_instance.add_message(self.name + "님이 보유중인 아이템:", *self.items)
 class Users:
         def __init__(self):
             self.user_list = []
@@ -108,12 +85,14 @@ class Users:
             self.user_list = sorted(self.user_list, key=lambda user: user.money + user.ppt, reverse=True)
             for user in self.user_list:
                 if user.SE == True:
+                    log_instance.add_message(" ")
                     log_instance.add_message(f"순위: {rank}, 이름: {user.name}, 재산: {int(user.ppt+user.money)} 토지재산: {int(user.ppt)} 현금재산: {int(user.money)}")
                     rank+=1
                     self.Rank.append(user)
             self.user_list = sorted(self.user_list, key=lambda user: user.time,reverse=True)
             for user in self.user_list:
                 if user.SE==False:
+                    log_instance.add_message(" ")
                     log_instance.add_message(f"순위: {rank}, 이름: {user.name}, 재산: {int(user.ppt+user.money)} 토지재산: {int(user.ppt)} 현금재산: {int(user.money)}")
                     rank+=1
                     self.Rank.append(user)
@@ -126,6 +105,7 @@ class Users:
                 self.add_user(User(f"{i}P"))
         def __len__(self):
             return len(self.user_list)
+        
 class Item:
     item_number = list(range(1,20))
     item_rarity = {"희귀", "영웅", "전설"}
@@ -137,7 +117,11 @@ class Item:
         enemy.SE = "얼음"
 
     def Item_Steal(self, user, enemy, block):
-        log_instance.add_message(f"{user.name}님이 {enemy.name}님의 \"{block.name}\"을(를) 빼앗았습니다!")
+        log_instance.add_message(" ")
+        log_instance.add_message("빼앗았습니다! ")
+        log_instance.add_message(f"\"{block.name}\"을(를) ")
+        log_instance.add_message(f"{enemy.name}님의  ")
+        log_instance.add_message(f"({self.name})")
         block.owner = user
     
     def Item_dice_Onemore(self, user):
@@ -149,21 +133,33 @@ class Item:
         
 
     def Item_3block(self, user):
-        log_instance.add_message(f"{user.name}님이 \"{self.name}\"아이템 사용! 3칸 이동합니다")
+        log_instance.add_message(" ")
+        log_instance.add_message("3칸 이동합니다 ")
+        log_instance.add_message(f"\"{self.name}\"아이템 사용!")
+        log_instance.add_message(f"({self.name})")
         User.move(user, 3)
 
     def Item_ReStart(self, user):
-        log_instance.add_message(f"{user.name}님이 \"{self.name}\"아이템 사용! 출발지로 이동합니다")
+        log_instance.add_message(" ")
+        log_instance.add_message("출발지로 이동합니다 ")
+        log_instance.add_message(f"\"{self.name}\"아이템 사용!")
+        log_instance.add_message(f"({self.name})")
         moving = BOARD_SIZE - user.position
         User.move(user, moving)
     
     def Item_Musk(self, user):
-        log_instance.add_message(f"{user.name}님이 \"{self.name}\"아이템 사용! 우주여행으로 이동합니다")
+        log_instance.add_message(" ")
+        log_instance.add_message("우주여행으로 이동합니다 ")
+        log_instance.add_message(f"\"{self.name}\"아이템 사용!")
+        log_instance.add_message(f"({self.name})")
         moving = 30 - user.position
         User.move(user, moving)
 
     def Item_receive(self, user):
-        log_instance.add_message(f"{user.name}님이 \"{self.name}\"아이템 사용! 사회복지기금(수령처)으로 이동합니다")
+        log_instance.add_message(" ")
+        log_instance.add_message("복지기금 수령처로 이동합니다 ")
+        log_instance.add_message(f"\"{self.name}\"아이템 사용! ")
+        log_instance.add_message(f"({self.name})")
         moving = 20 - user.position
         User.move(user, moving)
 
@@ -174,7 +170,8 @@ class Item:
                 user.properties.append(tgt.properties[0])
                 tgt.properties.pop(0)
             else:
-                print("상대토지가없어요")
+                log_instance.add_message(" ")
+                log_instance.add_message("상대 토지가 없어요")
 
     def Use_item(self,user,number):
         if number==3:
@@ -194,15 +191,24 @@ class Burst:
         self.rarity = rarity
 
     def Burst_Fine(user):
-        log_instance.add_message(f"{user.name}님이 세금 납부!")
+        log_instance.add_message(" ")
+        log_instance.add_message("세금 납부!")
+        log_instance.add_message("[벌칙]")
+        log_instance.add_message(f"({user.name})")
         user.money -= 200000
     
     def Burst_LossBlock(user, block):
-        log_instance.add_message(f"{user.name}님이 {block.name}의 소유권 상실!")
+        log_instance.add_message(" ")
+        log_instance.add_message(f"{block.name} 상실!")
+        log_instance.add_message("[벌칙]")
+        log_instance.add_message(f"({user.name})")
         block.owner = None
     
     def Burst_Drifting(user):
-        log_instance.add_message(f"{user.name}님이 무인도에 표류되었어요!")
+        log_instance.add_message(" ")
+        log_instance.add_message("이런! 무인도에 표류되었어요!")
+        log_instance.add_message("[벌칙]")
+        log_instance.add_message(f"({user.name})")
         if user.position <= 10:
             moving = 10 - user.position
         elif user.position > 10:
@@ -210,11 +216,16 @@ class Burst:
         User.move(user, moving)
 
     def Burst_Lotto(user):
-        log_instance.add_message("복권에 당첨되었습니다! 1000000원 획득!")
+        log_instance.add_message(" ")
+        log_instance.add_message("+1000000")
+        log_instance.add_message("복권에 당첨되었습니다!")
+        log_instance.add_message(f"({user.name})")
         user.money += 1000000
 
     def Burst_Donate(user):
-        log_instance.add_message(f"{user.name}님이 기부 당첨!")
+        log_instance.add_message(" ")
+        log_instance.add_message("기부 당첨!")
+        log_instance.add_message(f"({user.name})")
         if user.position <= 38:
             moving = 38 - user.position
         elif user.position > 38:
@@ -248,8 +259,9 @@ class Dice:
         self.image2 = pygame.image.load(f"Pictures/{self.dice2}.png")
         self.image2 = pygame.transform.scale(self.image2, (WIDTH/12, HEIGHT/10))
         self.dice = pygame.math.Vector2(self.dice1, self.dice2)
-        log_instance.add_message(f"{user.name}")
+        log_instance.add_message(" ")
         log_instance.add_message(f"{self.dice1} , {self.dice2}")
+        log_instance.add_message(f"{user.name} 주사위 굴리기!")
         if (self.dice1 == self.dice2):
             double = True
             self.roll = True

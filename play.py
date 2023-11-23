@@ -124,7 +124,9 @@ class PygameWindow:
                             if user.position != 10 and user.position !=30:
                                 if dice.roll_dice(user) == True:
                                     user.move(sum(dice.dice))
+                                    log_instance.add_message(" ")
                                     log_instance.add_message("더블")
+                                    log_instance.add_message(f"{user.name}")
                                     self.current_screen.draw(board)
                                     pygame.display.flip()
                                     buy_ground(user, board)
@@ -143,7 +145,10 @@ class PygameWindow:
                             if user.position == 2 or user.position==7 or user.position == 12 or user.position == 17 or user.position == 22 or user.position == 35:
                                 user.add_item()
                             if user.position == 30:
-                                log_instance.add_message("우주")
+                                log_instance.add_message(" ")
+                                log_instance.add_message("(다음 턴에 여행 가능)")
+                                log_instance.add_message("우주여행 도착!")
+                                log_instance.add_message(f"{user.name}")
                                 move=0
                                 while(move==0):
                                     events = pygame.event.get()
@@ -165,24 +170,36 @@ class PygameWindow:
                             
                             if user.position == 10 and user.jail_turn == 0:
                                 user.jail_turn += 1
-                                log_instance.add_message("무인도에 도착 현재 제일턴 1")
+                                log_instance.add_message(" ")
+                                log_instance.add_message(f"표류된 턴 : {user.jail_turn}")
+                                log_instance.add_message("무인도에 도착!")
+                                log_instance.add_message(f"{user.name}")
                             elif user.position == 10 and user.jail_turn == 3:
                                 if dice.roll_dice(user) == True:
                                     user.move(sum(dice.dice))
+                                    log_instance.add_message("")
                                     log_instance.add_message("더블")
+                                    log_instance.add_message(f"{user.name}")
                                     break
                                 user.move(sum(dice.dice))
                                 user.jail_turn = 0
                             elif user.position == 10:
                                 if dice.roll_dice(user) == True:
                                     user.move(sum(dice.dice))
-                                    log_instance.add_message("더블이 나와 탈출에 성공하셨습니다.")
+                                    log_instance.add_message(" ")
+                                    log_instance.add_message("더블! 탈출 성공")
+                                    log_instance.add_message(f"{user.name}")
                                 else:
                                     user.jail_turn += 1
-                                    log_instance.add_message(f"유저의 제일턴 : {user.jail_turn}")
+                                    log_instance.add_message(" ")
+                                    log_instance.add_message(f"표류된 턴 : {user.jail_turn}")
+                                    log_instance.add_message(f"{user.name}")
 
                             if user.position == 20:
-                                log_instance.add_message("복지")
+                                log_instance.add_message(" ")
+                                log_instance.add_message(f"+{board.blocks[20].price}")
+                                log_instance.add_message("복지금 수령처 도착!")
+                                log_instance.add_message(f"{user.name}")
                                 if board.blocks[20].price != 0:
                                     user.money += board.blocks[20].price
                                     board.blocks[20].price = 0
@@ -193,7 +210,9 @@ class PygameWindow:
                                 current_user_index = (current_user_index + 1) % (len(self.current_screen.users))
                                 if users.user_list[0].turns==users.user_list[len(users.user_list)-1].turns:
                                     game_turn+=1
-                                    log_instance.add_message(f"게임턴: {game_turn}") 
+                                    log_instance.add_message(" ")
+                                    log_instance.add_message(f"게임턴: {game_turn}")
+                                    log_instance.add_message(f"{user.name}") 
                                 if game_turn==20:
                                     self.current_screen = Ending(self.screen, users)
                     if user.SE == False:
@@ -201,6 +220,7 @@ class PygameWindow:
                         current_user_index = (current_user_index + 1) % (len(self.current_screen.users))
                         if users.user_list[0].turns==users.user_list[len(users.user_list)-1].turns:
                             game_turn+=1
+                            log_instance.add_message(" ")
                             log_instance.add_message(f"게임턴: {game_turn}")
                     count = 0
                     for user in users.user_list:
