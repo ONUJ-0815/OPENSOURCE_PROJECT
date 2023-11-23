@@ -2,7 +2,7 @@ import pygame
 from constant import *
 Item_Space = pygame.Rect((WIDTH-HEIGHT) / 2 + HEIGHT, HEIGHT / 4, (WIDTH - HEIGHT) / 2, HEIGHT / 2)
 Font_size = 10
-Max = 50
+Max = 46
 
 class Log_Info:
     def __init__(self):

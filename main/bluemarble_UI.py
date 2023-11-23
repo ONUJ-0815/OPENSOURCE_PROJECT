@@ -242,13 +242,8 @@ class GAME_SCREEN:
                 Start.set_alpha(alpha_value)
                 self.window.blit(Start, (block.rect.left, block.rect.top))
             if 1 <= block.position <= 9:
-                B_Width, B_Height = block.rect.w, block.rect.h
                 N_Width = limited_name.get_width()
                 N_Height = limited_name.get_height()
-                name_block = pygame.Rect(block.rect.left, block.rect.centery - B_Height/4, B_Width, B_Height/4)
-                pygame.draw.rect(self.window, NAME, name_block)
-                name_Line = pygame.Rect(block.rect.left, block.rect.centery - B_Height/4, B_Width, B_Height/4)
-                pygame.draw.rect(self.window, NAME_LINE, name_Line, 3)
                 self.window.blit(limited_name, (block.rect.centerx - N_Width/2, block.rect.centery - N_Height - 5))
             if block.position == 10:
                 B_Width, B_Height = block.rect.w, block.rect.h
@@ -256,16 +251,11 @@ class GAME_SCREEN:
                 Jail = pygame.transform.scale(Jail, (B_Width, B_Height))
                 self.window.blit(Jail, (block.rect.left, block.rect.top))
             if 11 <= block.position <= 19:
-                B_Width, B_Height = block.rect.w, block.rect.h
                 limited_name = block.name[:3]
                 limited_name = font_Info.render(limited_name, True, BLACK)
                 limited_name = pygame.transform.rotate(limited_name, 90)
                 N_Width = limited_name.get_width()
                 N_Height = limited_name.get_height()
-                name_block = pygame.Rect(block.rect.centerx, block.rect.top, B_Width/4, B_Height)
-                pygame.draw.rect(self.window, NAME, name_block)
-                name_Line = pygame.Rect(block.rect.centerx, block.rect.top, B_Width/4, B_Height)
-                pygame.draw.rect(self.window, NAME_LINE, name_Line, 3)
                 self.window.blit(limited_name, (block.rect.centerx + 5, block.rect.centery - N_Height/2))
             if block.position == 20:
                 B_Width, B_Height = block.rect.w, block.rect.h
@@ -276,10 +266,6 @@ class GAME_SCREEN:
                 B_Width, B_Height = block.rect.w, block.rect.h
                 N_Width = limited_name.get_width()
                 N_Height = limited_name.get_height()
-                name_block = pygame.Rect(block.rect.left, block.rect.centery, B_Width, B_Height/4)
-                pygame.draw.rect(self.window, NAME, name_block)
-                name_Line = pygame.Rect(block.rect.left, block.rect.centery, B_Width, B_Height/4)
-                pygame.draw.rect(self.window, NAME_LINE, name_Line, 3)
                 self.window.blit(limited_name, (block.rect.centerx - N_Width/2, block.rect.centery + 5))
             if block.position == 30:
                 B_Width, B_Height = block.rect.w, block.rect.h
@@ -292,17 +278,13 @@ class GAME_SCREEN:
                 Bank = pygame.image.load("Pictures/bank.png")
                 Bank = pygame.transform.scale(Bank, (B_Width, B_Height))
                 self.window.blit(Bank, (block.rect.left, block.rect.top))
-            if 31 <= block.position <= 39:
+            elif 31 <= block.position <= 39:
                 B_Width, B_Height = block.rect.w, block.rect.h
                 limited_name = block.name[:3]
                 limited_name = font_Info.render(limited_name, True, BLACK)
                 limited_name = pygame.transform.rotate(limited_name, 270)
                 N_Width = limited_name.get_width()
                 N_Height = limited_name.get_height()
-                name_block = pygame.Rect(block.rect.centerx - B_Width/4, block.rect.top, B_Width/4, B_Height)
-                pygame.draw.rect(self.window, NAME, name_block)
-                name_Line = pygame.Rect(block.rect.centerx - B_Width/4, block.rect.top, B_Width/4, B_Height)
-                pygame.draw.rect(self.window, NAME_LINE, name_Line, 3)
                 self.window.blit(limited_name, (block.rect.centerx - B_Width/4 + 5, block.rect.centery - N_Height/2))
         
         #황금열쇠
