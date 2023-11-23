@@ -125,8 +125,7 @@ class PygameWindow:
                                 if dice.roll_dice(user) == True:
                                     user.move(sum(dice.dice))
                                     log_instance.add_message(" ")
-                                    log_instance.add_message("더블")
-                                    log_instance.add_message(f"{user.name}")
+                                    log_instance.add_message("더블! 한번더!")
                                     self.current_screen.draw(board)
                                     pygame.display.flip()
                                     buy_ground(user, board)
@@ -148,7 +147,7 @@ class PygameWindow:
                                 log_instance.add_message(" ")
                                 log_instance.add_message("(다음 턴에 여행 가능)")
                                 log_instance.add_message("우주여행 도착!")
-                                log_instance.add_message(f"{user.name}")
+                                log_instance.add_message(f"({user.name})")
                                 move=0
                                 while(move==0):
                                     events = pygame.event.get()
@@ -173,13 +172,13 @@ class PygameWindow:
                                 log_instance.add_message(" ")
                                 log_instance.add_message(f"표류된 턴 : {user.jail_turn}")
                                 log_instance.add_message("무인도에 도착!")
-                                log_instance.add_message(f"{user.name}")
+                                log_instance.add_message(f"({user.name})")
                             elif user.position == 10 and user.jail_turn == 3:
                                 if dice.roll_dice(user) == True:
                                     user.move(sum(dice.dice))
                                     log_instance.add_message("")
-                                    log_instance.add_message("더블")
-                                    log_instance.add_message(f"{user.name}")
+                                    log_instance.add_message("더블! 한번더!")
+                                    log_instance.add_message(f"({user.name})")
                                     break
                                 user.move(sum(dice.dice))
                                 user.jail_turn = 0
@@ -188,18 +187,18 @@ class PygameWindow:
                                     user.move(sum(dice.dice))
                                     log_instance.add_message(" ")
                                     log_instance.add_message("더블! 탈출 성공")
-                                    log_instance.add_message(f"{user.name}")
+                                    log_instance.add_message(f"({user.name})")
                                 else:
                                     user.jail_turn += 1
                                     log_instance.add_message(" ")
                                     log_instance.add_message(f"표류된 턴 : {user.jail_turn}")
-                                    log_instance.add_message(f"{user.name}")
+                                    log_instance.add_message(f"({user.name})")
 
                             if user.position == 20:
                                 log_instance.add_message(" ")
                                 log_instance.add_message(f"+{board.blocks[20].price}")
                                 log_instance.add_message("복지금 수령처 도착!")
-                                log_instance.add_message(f"{user.name}")
+                                log_instance.add_message(f"({user.name})")
                                 if board.blocks[20].price != 0:
                                     user.money += board.blocks[20].price
                                     board.blocks[20].price = 0
@@ -212,7 +211,7 @@ class PygameWindow:
                                     game_turn+=1
                                     log_instance.add_message(" ")
                                     log_instance.add_message(f"게임턴: {game_turn}")
-                                    log_instance.add_message(f"{user.name}") 
+                                    log_instance.add_message(f"({user.name})") 
                                 if game_turn==20:
                                     self.current_screen = Ending(self.screen, users)
                     if user.SE == False:
